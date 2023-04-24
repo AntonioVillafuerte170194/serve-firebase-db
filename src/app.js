@@ -3,6 +3,8 @@ const path = require("path");
 const exphbs = require("express-handlebars");
 const morgan = require("morgan");
 
+// const { db } = require("./firebase");
+
 const app = express();
 
 // Settings
@@ -17,14 +19,19 @@ app.engine(
 );
 app.set("view engine", ".hbs");
 
-// middlewares
+// // middlewares
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 
-// Routes
+// // Routes
 app.use(require("./routes/index"));
 
-// Static files
+// // Static files
 app.use("/public", express.static(path.join(__dirname, "public")));
+// app.get("/",async(req ,res) => {
+//   const querySnapshot = await db.collection("contacts").get()
+//   console.log(querySnapshot.docs[0].data())
+//   res.send("hello")
+// })
 
 module.exports = app;
